@@ -7,6 +7,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+	<script>
+		function del(seq) {
+			var chk = confirm("정말 삭제하시겠습니까?");
+			if (chk) {
+				location.href='delete?seq='+seq;
+			}
+		}
+	</script>
+	
 </head>
 <style>
 	h2 { 
@@ -39,7 +49,11 @@
 				<td><div style="height: 300px; margin: 10px; display: inline-block">${board.content }</div></td>
 			</tr>
 		</table>
-		<input type="button" value="글 목록" style="float: right;" onclick="location.href='http://localhost:8080/';">
-	</div>	
+		<div style="float: right;">
+			<input type="button" value="수정" onclick="location.href='modify?seq=${board.seq}'">
+			<input type="button" value="삭제" onclick="del(${board.seq})">
+			<input type="button" value="글 목록" onclick="location.href='http://localhost:8080/';">
+		</div>
+	</div>
 </body>
 </html>

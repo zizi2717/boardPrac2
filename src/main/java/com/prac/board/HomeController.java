@@ -20,8 +20,8 @@ public class HomeController {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model) {
+	@RequestMapping("/")
+	public String board(Model model) {
 		
 		List<BoardVO> viewAll = 
 				sqlSession.getMapper(com.prac.board.mapper.BoardMapper.class).viewAll();
@@ -46,13 +46,36 @@ public class HomeController {
 	public String boardWrite() {
 		return "board/boardWrite";
 	}
-	
 	@PostMapping("write")
 	public String write(BoardVO vo) {
 		
 		sqlSession.getMapper(com.prac.board.mapper.BoardMapper.class).insertBoard(vo);
-		System.out.println(vo.getSeq());
-		return "redirect:/detail?seq=" + vo.getSeq();
+
+		return "redirect: /";
 	}
 	
+	@GetMapping("delete")
+	public String delete(@RequestParam("seq")int seq) {
+		
+		sqlSession.getMapper(com.prac.board.mapper.BoardMapper.class).deleteBoard(seq);
+		
+		return "redirect: /";
+	}
+	
+	@GetMapping("modify")
+	public String modify(@RequestParam("seq")int seq, Model model) {
+		
+		BoardVO viewDetail = 
+				sqlSession.getMapper(com.prac.board.mapper.BoardMapper.class).viewDetail(seq);
+		model.addAttribute("board", viewDetail);
+				
+		return "board/boardModify";
+	}
+	@PostMapping("modify")
+	public String modify(BoardVO vo) {
+		
+		sqlSession.getMapper(com.prac.board.mapper.BoardMapper.class).updateBoard(vo);
+		
+		return "redirect: /detail?seq=" + vo.getSeq();
+	}
 }

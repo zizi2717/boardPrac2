@@ -22,5 +22,13 @@
 		INSERT INTO BOARD (seq, writer, title, content)
 					VALUES (Board_SEQ.NextVal, #{writer}, #{title}, #{content})
 	</insert>
+	
+	<delete id="deleteBoard" parameterType="int">
+		DELETE FROM BOARD WHERE SEQ = #{seq}
+	</delete>
+	
+	<update id="updateBoard" parameterType="com.prac.board.vo.BoardVO">
+		UPDATE BOARD SET TITLE = #{title}, CONTENT = #{content} WHERE SEQ = #{seq}
+	</update>
   	
  </mapper>
