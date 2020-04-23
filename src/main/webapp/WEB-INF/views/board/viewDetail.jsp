@@ -39,7 +39,7 @@
 				<td><div style="height: 300px; margin: 10px; display: inline-block">${board.content }</div></td>
 			</tr>
 		</table>
-		<input type="button" value="글 목록" style="float: right;" onclick="location.href='http://localhost:8080/board/';">
+		<input type="button" value="글 목록" style="float: right;" onclick="location.href='http://localhost:8080/';">
 	</div>	
 </body>
 </html>

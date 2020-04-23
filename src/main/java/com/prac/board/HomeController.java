@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.prac.board.vo.BoardVO;
 
@@ -29,15 +31,28 @@ public class HomeController {
 	}
 	
 	@GetMapping(value = "detail")
-	public String viewDetail(Model model, BoardVO vo) {
+	public String viewDetail(Model model, @RequestParam("seq")int seq) {
 		
 		BoardVO viewDetail = 
-				sqlSession.getMapper(com.prac.board.mapper.BoardMapper.class).viewDetail(vo.getSeq());
+				sqlSession.getMapper(com.prac.board.mapper.BoardMapper.class).viewDetail(seq);
 		model.addAttribute("board", viewDetail);
 		
-		sqlSession.getMapper(com.prac.board.mapper.BoardMapper.class).plusCnt(vo.getSeq());
+		sqlSession.getMapper(com.prac.board.mapper.BoardMapper.class).plusCnt(seq);
 		
 		return "board/viewDetail";
+	}
+	
+	@GetMapping("write")
+	public String boardWrite() {
+		return "board/boardWrite";
+	}
+	
+	@PostMapping("write")
+	public String write(BoardVO vo) {
+		
+		sqlSession.getMapper(com.prac.board.mapper.BoardMapper.class).insertBoard(vo);
+		System.out.println(vo.getSeq());
+		return "redirect:/detail?seq=" + vo.getSeq();
 	}
 	
 }

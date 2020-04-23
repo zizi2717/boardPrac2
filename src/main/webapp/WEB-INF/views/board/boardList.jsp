@@ -43,6 +43,7 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<input type="button" value="글쓰기" style="float: right;" onclick="location.href='/write'">
 	</div>
 </body>
 </html>

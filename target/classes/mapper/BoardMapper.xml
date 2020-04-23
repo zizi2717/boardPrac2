@@ -6,10 +6,21 @@
  	<select id="viewAll" resultType="com.prac.board.vo.BoardVO">
   		SELECT * FROM BOARD ORDER BY SEQ DESC
   	</select>
+  	
   	<select id="viewDetail" resultType="com.prac.board.vo.BoardVO" parameterType="int">
   		SELECT * FROM BOARD WHERE SEQ = #{seq}
   	</select>
+  	
   	<update id="plusCnt" parameterType="int">
   		UPDATE BOARD SET CNT = CNT + 1 WHERE SEQ = #{seq}
   	</update>
+  	
+  	<insert id="insertBoard" parameterType="com.prac.board.vo.BoardVO">
+		<!-- <selectKey keyProperty="seq" order="BEFORE" resultType="int">
+			SELECT BOARD_SEQ.NEXTVAL FROM DUAL
+		</selectKey> -->
+		INSERT INTO BOARD (seq, writer, title, content)
+					VALUES (Board_SEQ.NextVal, #{writer}, #{title}, #{content})
+	</insert>
+  	
  </mapper>
